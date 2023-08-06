@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Wardrobe.ImageClassificationService-4FDC8866-D521-4089-9658-13267E72482F</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.0-develop.1447" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+        <PackageReference Include="Microsoft.ML" Version="3.0.0-preview.23266.6" />
+        <PackageReference Include="Microsoft.ML.ImageAnalytics" Version="3.0.0-preview.23266.6" />
+        <PackageReference Include="Microsoft.ML.TensorFlow" Version="3.0.0-preview.23266.6" />
+        <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
+        <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.11.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="MassTransit">
+        <HintPath>..\..\..\.nuget\packages\masstransit\8.1.0-develop.1444\lib\net7.0\MassTransit.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wardrobe.Application\Wardrobe.Application.csproj" />
+      <ProjectReference Include="..\Wardrobe.CrossCutting\Wardrobe.CrossCutting.csproj" />
+      <ProjectReference Include="..\Wardrobe.Domain\Wardrobe.Domain.csproj" />
+      <ProjectReference Include="..\Wardrobe.Infra\Wardrobe.Infra.csproj" />
+    </ItemGroup>
+</Project>

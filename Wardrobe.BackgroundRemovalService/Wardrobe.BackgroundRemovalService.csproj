@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Wardrobe.BackgroundRemovalService-DA3BEF09-092C-48A5-8F81-37370A52691D</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.0-develop.1447" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wardrobe.Application\Wardrobe.Application.csproj" />
+      <ProjectReference Include="..\Wardrobe.CrossCutting\Wardrobe.CrossCutting.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="MassTransit">
+        <HintPath>..\..\..\.nuget\packages\masstransit\8.1.0-develop.1444\lib\net7.0\MassTransit.dll</HintPath>
+      </Reference>
+      <Reference Include="MassTransit.Abstractions">
+        <HintPath>..\..\..\.nuget\packages\masstransit.abstractions\8.1.0-develop.1444\lib\net7.0\MassTransit.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+</Project>
