@@ -16,11 +16,12 @@ public class ClassificationQueueService : IClassificationQueueService
         _logger = logger;
     }
     
-    public async Task SendImageToClassificationQueue(string imageBase64, string fileName, string fileMimeType)
+    public async Task SendImageToClassificationQueue(string id, string imageBase64, string fileName, string fileMimeType)
     {
         var endpoint = await this._sendEndpointProvider.GetSendEndpoint(new Uri($"queue:{Queues.Classification.GetDescription()}"));
         await endpoint.Send<IImageClassificationEvent>(new
         {
+            Id = id,
             FileName = fileName,
             FileMimeType = fileMimeType,
             ImageBase64 = imageBase64
@@ -32,5 +33,5 @@ public class ClassificationQueueService : IClassificationQueueService
 
 public interface IClassificationQueueService
 {
-    public Task SendImageToClassificationQueue(string imageBase64, string fileName, string fileMimeType);
+    public Task SendImageToClassificationQueue(string id, string imageBase64, string fileName, string fileMimeType);
 }

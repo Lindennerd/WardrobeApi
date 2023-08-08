@@ -1,10 +1,8 @@
-using System.Web;
-using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
-using Wardrobe.Application.Image;
 using Wardrobe.Application.Image.BackgroundRemoval;
+using Wardrobe.Application.Image.Database;
 using Wardrobe.CrossCutting;
+using Wardrobe.Infra.Database.Cloth;
 
 namespace Wardrobe.API.Controllers;
 
@@ -13,17 +11,39 @@ namespace Wardrobe.API.Controllers;
 public class ImageController : ControllerBase
 {
     private readonly IBackgroundRemovalQueueService _backgroundRemovalQueueService;
+    private readonly ISaveImage _saveImage;
+    private readonly ILogger<ImageController> _logger;
 
-    public ImageController(IBackgroundRemovalQueueService  backgroundRemovalQueueService)
+    public ImageController(
+        IBackgroundRemovalQueueService  backgroundRemovalQueueService,
+        ISaveImage saveImage,
+        ILogger<ImageController> logger)
     {
         _backgroundRemovalQueueService = backgroundRemovalQueueService;
+        _saveImage = saveImage;
+        _logger = logger;
     }
     
     [HttpPost]
-    public async Task<ActionResult> PostImage(IFormFile file)
+    public async Task<ActionResult> SendImageToBackgroundRemovalQueue(IFormFile file)
     {
-        this._backgroundRemovalQueueService.SendImageToBackgroundRemovalQueue(file.ConvertToBase64(), file.FileName,
-            file.GetMimeType());
-        return Ok();
+        try
+        {
+            var model = await this._saveImage.Save(new ClothesModel
+            {
+                Name = file.FileName,
+                MimeType = file.GetMimeType(),
+                Image = file.ConvertToBase64()
+            });
+        
+            this._backgroundRemovalQueueService.SendImageToBackgroundRemovalQueue(model.Id, file.ConvertToBase64(), file.FileName,
+                file.GetMimeType());
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error while sending image to background removal queue");
+            throw;
+        }
     }
 }

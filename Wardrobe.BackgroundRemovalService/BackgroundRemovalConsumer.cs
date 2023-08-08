@@ -26,8 +26,13 @@ public class BackgroundRemovalConsumer : IConsumer<IImageBackgroundRemovalEvent>
     {
         try
         {
-            var result = await _backgroundRemoval.RemoveBackground(new BackgroundRemovalDTO(context.Message.ImageBase64, context.Message.FileMimeType));
-            await this._classificationQueueService.SendImageToClassificationQueue(result, context.Message.FileName, context.Message.FileMimeType);
+            var result = await _backgroundRemoval.RemoveBackground(new BackgroundRemovalDto(
+                context.Message.Id,
+                context.Message.ImageBase64, 
+                context.Message.FileMimeType));
+            
+            await _classificationQueueService.SendImageToClassificationQueue(context.Message.Id, result,
+                context.Message.FileName, context.Message.FileMimeType);
         }
         catch (Exception e)
         {

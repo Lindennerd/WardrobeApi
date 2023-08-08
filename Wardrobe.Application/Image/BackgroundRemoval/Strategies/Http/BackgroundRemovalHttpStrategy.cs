@@ -11,7 +11,7 @@ public class BackgroundRemovalHttp : IBackgroundRemoval
         _backgroundRemovalHttpClient = backgroundRemovalHttpClient;
     }
     
-    public async Task<string> RemoveBackground(BackgroundRemovalDTO backgroundRemovalDto)
+    public async Task<string> RemoveBackground(BackgroundRemovalDto backgroundRemovalDto)
     {
         var base64 = $"data:{backgroundRemovalDto.MimeType};base64,{backgroundRemovalDto.ImageBase64}";
         return await this._backgroundRemovalHttpClient.PostImage(base64);
@@ -20,5 +20,5 @@ public class BackgroundRemovalHttp : IBackgroundRemoval
 
 public interface IBackgroundRemoval
 {
-    Task<string> RemoveBackground(BackgroundRemovalDTO backgroundRemovalDto);
+    Task<string> RemoveBackground(BackgroundRemovalDto backgroundRemovalDto);
 }

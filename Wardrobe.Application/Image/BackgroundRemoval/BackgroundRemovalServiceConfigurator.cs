@@ -11,3 +11,8 @@ public class BackgroundRemovalServiceConfigurator : IBackgroundRemovalServiceCon
 
     public IServiceCollection Services { get; }
 }
+
+public interface IBackgroundRemovalServiceConfigurator
+{
+    IServiceCollection Services { get; }
+}

@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.0-develop.1444" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
+        <PackageReference Include="MongoDB.Driver.Core" Version="2.20.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 

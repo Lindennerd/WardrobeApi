@@ -4,21 +4,24 @@ using SixLabors.ImageSharp.Drawing.Processing;
 
 namespace Wardrobe.Application.Image.BackgroundRemoval.Strategies.SharpImage;
 
-public class BackgroundRemovalSharpImageStrategy : IBackgroundRemoval
+public class BackgroundRemovalSharpImage : IBackgroundRemoval
 {
-    public float BrightnessThreshold { get; set; }
+    private float BrightnessThreshold { get; set; }
     
-    public BackgroundRemovalSharpImageStrategy(float brightnessThreshold)
+    public BackgroundRemovalSharpImage(float brightnessThreshold)
     {
         BrightnessThreshold = brightnessThreshold;
     }    
-    public async Task<string> RemoveBackground(BackgroundRemovalDTO backgroundRemovalDto)
+    public async Task<string> RemoveBackground(BackgroundRemovalDto backgroundRemovalDto)
     {
-        using var image = await SixLabors.ImageSharp.Image.LoadAsync(backgroundRemovalDto.ImageBase64);
+        var imageBytes = Convert.FromBase64String(backgroundRemovalDto.ImageBase64);
+        var imageStream = new MemoryStream(imageBytes);
+        
+        using var image = await SixLabors.ImageSharp.Image.LoadAsync(imageStream);
         
         var sourceColor = Color.White;
         var targetColor = Color.Transparent;
-        var brush = new RecolorBrush(sourceColor, targetColor, threshold: 0.8F);
+        var brush = new RecolorBrush(sourceColor, targetColor, threshold: BrightnessThreshold);
 
         image.Mutate(x => x.Fill(brush));
         

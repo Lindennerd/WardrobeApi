@@ -15,6 +15,7 @@
         <PackageReference Include="Microsoft.ML.ImageAnalytics" Version="3.0.0-preview.23266.6" />
         <PackageReference Include="Microsoft.ML.TensorFlow" Version="3.0.0-preview.23266.6" />
         <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
+        <PackageReference Include="MongoDB.Driver.Core" Version="2.20.0" />
         <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.11.4" />
     </ItemGroup>
 

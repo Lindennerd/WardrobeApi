@@ -1,15 +1,23 @@
 using MassTransit;
 using Wardrobe.Application.Image.BackgroundRemoval;
-using Wardrobe.CrossCutting.Configurations;
+using Wardrobe.Application.Image.Database;
+using Wardrobe.Domain.Repository;
+using Wardrobe.Infra.Database;
+using Wardrobe.Infra.Database.Cloth;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+var builder = WebApplication
+    .CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<MongoConnectionSettings>(
+    builder.Configuration.GetSection("MongoDB")
+);
+
+builder.Services.AddSingleton<IRepositoryBase<ClothesModel>, ClothesRepository>();
+builder.Services.AddSingleton<ISaveImage, SaveImage>();
 
 builder.Services.AddMassTransit(x =>
 {
@@ -24,10 +32,8 @@ builder.Services.AddMassTransit(x =>
 
 builder.Services.AddScoped<IBackgroundRemovalQueueService, BackgroundRemovalQueueService>();
 
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

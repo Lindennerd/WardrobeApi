@@ -9,7 +9,7 @@ public class BackgroundRemovalImageSharpConfigurator
     
     public BackgroundRemovalImageSharpConfigurator(IServiceCollection collection)
     {
-        collection.AddScoped<IBackgroundRemoval, BackgroundRemovalSharpImageStrategy>((opt) =>
-            new BackgroundRemovalSharpImageStrategy(this.BrightnessThreshHold));
+        collection.AddScoped<IBackgroundRemoval, BackgroundRemovalSharpImage>((opt) =>
+            new BackgroundRemovalSharpImage(this.BrightnessThreshHold));
     }
 }

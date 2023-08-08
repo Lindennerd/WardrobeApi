@@ -18,11 +18,12 @@ public class BackgroundRemovalQueueService : IBackgroundRemovalQueueService
         _logger = logger;
     }
     
-    public async void SendImageToBackgroundRemovalQueue(string imageBase64, string fileName, string fileMimeType)
+    public async void SendImageToBackgroundRemovalQueue(string id , string imageBase64, string fileName, string fileMimeType)
     {
         var endpoint = await this._sendEndpointProvider.GetSendEndpoint(new Uri($"queue:{Queues.BackgroundRemoval.GetDescription()}"));
         await endpoint.Send<IImageBackgroundRemovalEvent>(new
         {
+            Id = id,
             FileName = fileName,
             FileMimeType = fileMimeType,
             ImageBase64 = imageBase64
@@ -34,5 +35,5 @@ public class BackgroundRemovalQueueService : IBackgroundRemovalQueueService
 
 public interface IBackgroundRemovalQueueService
 {
-    public void SendImageToBackgroundRemovalQueue(string imageBase64, string fileName, string fileMimeType);
+    public void SendImageToBackgroundRemovalQueue(string id, string imageBase64, string fileName, string fileMimeType);
 }

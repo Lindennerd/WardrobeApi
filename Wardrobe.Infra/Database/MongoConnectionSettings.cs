@@ -2,7 +2,7 @@ namespace Wardrobe.Infra.Database;
 
 public class MongoConnectionSettings
 {
-    public string ConnectionString { get; set; }
-    public string DatabaseName { get; set; }
-    public string CollectionName { get; set; }
+    public required string ConnectionString { get; set; }
+    public required string DatabaseName { get; set; }
+    public required string CollectionName { get; set; }
 }

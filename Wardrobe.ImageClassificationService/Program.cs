@@ -1,10 +1,8 @@
 using MassTransit;
 using Wardrobe.Application.Image.Classification;
+using Wardrobe.Application.Image.Database;
 using Wardrobe.CrossCutting;
-using Wardrobe.CrossCutting.Configurations;
 using Wardrobe.ImageClassificationService;
-using Wardrobe.Infra.Database;
-using Wardrobe.Infra.Database.Cloth;
 using Wardrobe.Infra.ML;
 
 var host = Host.CreateDefaultBuilder(args)
@@ -17,12 +15,7 @@ var host = Host.CreateDefaultBuilder(args)
             new ClassificationPredictionService(modelConfiguration["ModelPath"]));
 
         services.AddScoped<ClassificationService>();
-
-        services.Configure<MongoConnectionSettings>(
-            context.Configuration.GetSection("MongoDB")
-        );
-
-        services.AddSingleton<ClothesService>();
+        services.AddScoped<IUpdateClassification, UpdateClassification>();
 
         services.AddMassTransit(cfg =>
         {

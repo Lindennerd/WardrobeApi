@@ -20,6 +20,7 @@ public class ImageClassificationConsumer : IConsumer<IImageClassificationEvent>
     public async Task Consume(ConsumeContext<IImageClassificationEvent> context)
     {
         await this._classificationService.ClassifyImage(
+            context.Message.Id,
             context.Message.ImageBase64,
             context.Message.FileName
         );
