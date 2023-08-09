@@ -1,7 +1,5 @@
 using MassTransit;
 using Wardrobe.Application.Image.BackgroundRemoval;
-using Wardrobe.Application.Image.Database;
-using Wardrobe.Domain.Repository;
 using Wardrobe.Infra.Database;
 using Wardrobe.Infra.Database.Cloth;
 
@@ -16,8 +14,7 @@ builder.Services.Configure<MongoConnectionSettings>(
     builder.Configuration.GetSection("MongoDB")
 );
 
-builder.Services.AddSingleton<IRepositoryBase<ClothesModel>, ClothesRepository>();
-builder.Services.AddSingleton<ISaveImage, SaveImage>();
+builder.Services.AddScoped<IClothesRepository, ClothesRepository>();
 
 builder.Services.AddMassTransit(x =>
 {

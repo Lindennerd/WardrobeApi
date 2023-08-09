@@ -1,22 +1,23 @@
 using Microsoft.Extensions.Logging;
-using Wardrobe.Application.Image.Database;
+using Microsoft.Extensions.ML;
+using Wardrobe.Infra.Database.Cloth;
 using Wardrobe.Infra.ML;
 
 namespace Wardrobe.Application.Image.Classification;
 
 public class ClassificationService
 {
-    private readonly ClassificationPredictionService _classificationPredictionService;
-    private readonly IUpdateClassification _updateClassification;
+    private readonly IClothesRepository _repository;
     private readonly ILogger<ClassificationService> _logger;
+    private readonly PredictionEnginePool<ImageData,ImagePrediction> _classificationPredictionService;
 
     public ClassificationService(
-        ClassificationPredictionService classificationPredictionService,
-        IUpdateClassification updateClassification,
+        IClothesRepository repository,
+        PredictionEnginePool<ImageData, ImagePrediction> classificationPredictionService,
         ILogger<ClassificationService> logger)
     {
         _classificationPredictionService = classificationPredictionService;
-        _updateClassification = updateClassification;
+        _repository = repository;
         _logger = logger;
     }
     
@@ -25,8 +26,8 @@ public class ClassificationService
         var tempPath = await SaveBase64Image(imageBase64, fileName);
         var prediction = _classificationPredictionService.Predict(new ImageData { ImagePath = tempPath });
         _logger.LogInformation("Image {FileName} classified as {Label}", fileName, prediction.PredictedLabelValue);
-        await _updateClassification.UpdateClassificationAsync(id, prediction.PredictedLabelValue,
-            prediction.Score.Average());
+        
+        await _repository.UpdateClassification(id, prediction.PredictedLabelValue!, prediction.Score!.Max());
         File.Delete(tempPath);
     }
     

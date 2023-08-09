@@ -1,11 +1,12 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Wardrobe.Domain.Repository;
+using Wardrobe.Domain.SeedWork;
 
 namespace Wardrobe.Infra.Database;
 
 public abstract class RepositoryBase<TCollection> : IRepositoryBase<TCollection>
-    where TCollection : class
+    where TCollection : EntityBase,  new()
 {
     private readonly IMongoCollection<TCollection> _collection;
 
@@ -32,5 +33,11 @@ public abstract class RepositoryBase<TCollection> : IRepositoryBase<TCollection>
     {
         var filter = Builders<TCollection>.Filter.Eq("_id", id);
         await _collection.ReplaceOneAsync(filter, model, new ReplaceOptions { IsUpsert = true });
+    }
+
+    protected async Task Update(string id, UpdateDefinition<TCollection> updateDefinition)
+    {
+        var filter = Builders<TCollection>.Filter.Eq(e => e.Id, id);
+        await _collection.FindOneAndUpdateAsync(filter, updateDefinition);
     }
 }

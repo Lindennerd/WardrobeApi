@@ -1,8 +1,10 @@
 using MassTransit;
+using Microsoft.Extensions.ML;
 using Wardrobe.Application.Image.Classification;
-using Wardrobe.Application.Image.Database;
 using Wardrobe.CrossCutting;
 using Wardrobe.ImageClassificationService;
+using Wardrobe.Infra.Database;
+using Wardrobe.Infra.Database.Cloth;
 using Wardrobe.Infra.ML;
 
 var host = Host.CreateDefaultBuilder(args)
@@ -11,11 +13,16 @@ var host = Host.CreateDefaultBuilder(args)
 
         var modelConfiguration = context.Configuration.GetSection("ML");
       
-        services.AddSingleton<ClassificationPredictionService>(x =>
-            new ClassificationPredictionService(modelConfiguration["ModelPath"]));
-
+        services.Configure<MongoConnectionSettings>(
+            context.Configuration.GetSection("MongoDB")
+        );
+        
+        //https://github.com/dotnet/docs/blob/main/docs/machine-learning/how-to-guides/serve-model-web-api-ml-net.md
+        services.AddPredictionEnginePool<ImageData, ImagePrediction>()
+            .FromFile(modelConfiguration["ModelPath"]);
+        
         services.AddScoped<ClassificationService>();
-        services.AddScoped<IUpdateClassification, UpdateClassification>();
+        services.AddScoped<IClothesRepository, ClothesRepository>();
 
         services.AddMassTransit(cfg =>
         {

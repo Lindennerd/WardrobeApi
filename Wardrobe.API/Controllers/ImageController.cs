@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Wardrobe.Application.Image.BackgroundRemoval;
-using Wardrobe.Application.Image.Database;
 using Wardrobe.CrossCutting;
+using Wardrobe.Domain.Cloth;
 using Wardrobe.Infra.Database.Cloth;
 
 namespace Wardrobe.API.Controllers;
@@ -11,16 +11,16 @@ namespace Wardrobe.API.Controllers;
 public class ImageController : ControllerBase
 {
     private readonly IBackgroundRemovalQueueService _backgroundRemovalQueueService;
-    private readonly ISaveImage _saveImage;
+    private readonly IClothesRepository _clothesRepository;
     private readonly ILogger<ImageController> _logger;
 
     public ImageController(
         IBackgroundRemovalQueueService  backgroundRemovalQueueService,
-        ISaveImage saveImage,
+        IClothesRepository clothesRepository,
         ILogger<ImageController> logger)
     {
         _backgroundRemovalQueueService = backgroundRemovalQueueService;
-        _saveImage = saveImage;
+        _clothesRepository = clothesRepository;
         _logger = logger;
     }
     
@@ -29,7 +29,7 @@ public class ImageController : ControllerBase
     {
         try
         {
-            var model = await this._saveImage.Save(new ClothesModel
+            var model = await this._clothesRepository.Save(new Cloth
             {
                 Name = file.FileName,
                 MimeType = file.GetMimeType(),

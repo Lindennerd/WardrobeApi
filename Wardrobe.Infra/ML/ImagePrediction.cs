@@ -2,7 +2,7 @@ namespace Wardrobe.Infra.ML;
 
 public class ImagePrediction : ImageData
 {
-    public float[] Score;
+    public float[]? Score { get; set; }
 
-    public string PredictedLabelValue;
+    public string? PredictedLabelValue { get; set; }
 }

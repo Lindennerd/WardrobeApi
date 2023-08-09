@@ -4,9 +4,14 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-    </PropertyGroup>
+     </PropertyGroup>
 
-
-
-
+    <ItemGroup>
+      <Reference Include="MongoDB.Bson">
+        <HintPath>..\..\..\.nuget\packages\mongodb.bson\2.20.0\lib\netstandard2.1\MongoDB.Bson.dll</HintPath>
+      </Reference>
+      <Reference Include="MongoDB.Driver">
+        <HintPath>..\..\..\.nuget\packages\mongodb.driver\2.20.0\lib\netstandard2.1\MongoDB.Driver.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>

@@ -19,6 +19,12 @@
       <Reference Include="Microsoft.Extensions.Logging.Abstractions">
         <HintPath>..\..\..\.nuget\packages\microsoft.extensions.logging.abstractions\7.0.1\lib\net7.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       </Reference>
+      <Reference Include="Microsoft.Extensions.ML">
+        <HintPath>..\..\..\.nuget\packages\microsoft.extensions.ml\3.0.0-preview.23266.6\lib\netstandard2.0\Microsoft.Extensions.ML.dll</HintPath>
+      </Reference>
+      <Reference Include="MongoDB.Driver">
+        <HintPath>..\..\..\.nuget\packages\mongodb.driver\2.20.0\lib\netstandard2.1\MongoDB.Driver.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <ItemGroup>
