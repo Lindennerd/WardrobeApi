@@ -15,6 +15,7 @@ builder.Services.Configure<MongoConnectionSettings>(
 );
 
 builder.Services.AddScoped<IClothesRepository, ClothesRepository>();
+builder.Services.AddScoped<IBackgroundRemovalQueueService, BackgroundRemovalQueueService>();
 
 builder.Services.AddMassTransit(x =>
 {
@@ -27,7 +28,15 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-builder.Services.AddScoped<IBackgroundRemovalQueueService, BackgroundRemovalQueueService>();
+builder.Services.AddCors( options =>
+{
+    options.AddPolicy("AllowAll", corsBuilder =>
+    {
+        corsBuilder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -36,6 +45,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 
