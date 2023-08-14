@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Wardrobe.Domain.Cloth;
 using Wardrobe.Domain.Repository;
 
 namespace Wardrobe.Infra.Database.Cloth;
@@ -11,11 +12,13 @@ public class ClothesRepository : RepositoryBase<Domain.Cloth.Cloth>, IClothesRep
     {
     }
 
-    public async Task UpdateClassification(string id, string classification, float confidence)
+    public async Task UpdateClassification(string id, Classification classification)
     {
+        if (string.IsNullOrEmpty(id) || classification == null)
+            throw new ArgumentNullException();
+        
         var updateDefinition = Builders<Domain.Cloth.Cloth>.Update
-            .Set(x => x.Classification, classification)
-            .Set(x => x.Confidence, confidence);
+            .Set<Classification>(x => x.Classification, classification);
         await Update(id, updateDefinition);
     }
 }
