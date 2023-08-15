@@ -32,5 +32,8 @@
       <Reference Include="MassTransit.Abstractions">
         <HintPath>..\..\..\.nuget\packages\masstransit.abstractions\8.1.0-develop.1444\lib\net7.0\MassTransit.Abstractions.dll</HintPath>
       </Reference>
+      <Reference Include="NLog.Extensions.Logging">
+        <HintPath>..\..\..\.nuget\packages\nlog.extensions.logging\5.3.3\lib\net6.0\NLog.Extensions.Logging.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>

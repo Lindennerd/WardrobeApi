@@ -1,4 +1,5 @@
 using MassTransit;
+using NLog.Extensions.Logging;
 using Wardrobe.Application.Image.BackgroundRemoval;
 using Wardrobe.Application.Image.Classification;
 using Wardrobe.BackgroundRemovalService;
@@ -8,6 +9,11 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging((_, builder) => builder.AddConsole())
     .ConfigureServices((context, services) =>
     {
+        services.AddLogging(logging =>
+        {
+            logging.AddNLog(context.Configuration.GetSection("Logging"));
+        });
+        
         services.AddScoped<IClassificationQueueService, ClassificationQueueService>();
 
         services.AddBackgroundRemovalService(cfg =>

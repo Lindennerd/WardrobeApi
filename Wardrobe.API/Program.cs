@@ -1,4 +1,5 @@
 using MassTransit;
+using NLog.Extensions.Logging;
 using Wardrobe.Application.Image.BackgroundRemoval;
 using Wardrobe.Infra.Database;
 using Wardrobe.Infra.Database.Cloth;
@@ -36,6 +37,12 @@ builder.Services.AddCors( options =>
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
+});
+
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddNLog(builder.Configuration.GetSection("Logging"));
 });
 
 var app = builder.Build();

@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.Extensions.ML;
+using NLog.Extensions.Logging;
 using Wardrobe.Application.Image.Classification;
 using Wardrobe.CrossCutting;
 using Wardrobe.ImageClassificationService;
@@ -16,6 +17,11 @@ var host = Host.CreateDefaultBuilder(args)
         services.Configure<MongoConnectionSettings>(
             context.Configuration.GetSection("MongoDB")
         );
+        
+        services.AddLogging(logging =>
+        {
+            logging.AddNLog(context.Configuration.GetSection("Logging"));
+        });
         
         //https://github.com/dotnet/docs/blob/main/docs/machine-learning/how-to-guides/serve-model-web-api-ml-net.md
         services.AddPredictionEnginePool<ImageData, ImagePrediction>()
