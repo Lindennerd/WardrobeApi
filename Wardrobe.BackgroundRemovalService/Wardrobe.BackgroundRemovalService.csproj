@@ -12,6 +12,7 @@
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.0-develop.1447" />
         <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+        <PackageReference Include="NLog" Version="5.2.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -35,5 +36,9 @@
       <Reference Include="NLog.Extensions.Logging">
         <HintPath>..\..\..\.nuget\packages\nlog.extensions.logging\5.3.3\lib\net6.0\NLog.Extensions.Logging.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="internal.txt" />
     </ItemGroup>
 </Project>

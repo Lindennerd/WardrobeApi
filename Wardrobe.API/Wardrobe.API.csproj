@@ -10,7 +10,9 @@
     <ItemGroup>
         <PackageReference Include="Logtail" Version="0.2.6" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.0-develop.1444" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
         <PackageReference Include="MongoDB.Driver.Core" Version="2.20.0" />
         <PackageReference Include="NLog.Extensions.Logging" Version="5.3.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -28,5 +30,6 @@
       <ProjectReference Include="..\Wardrobe.Application\Wardrobe.Application.csproj" />
       <ProjectReference Include="..\Wardrobe.CrossCutting\Wardrobe.CrossCutting.csproj" />
     </ItemGroup>
+
 
 </Project>

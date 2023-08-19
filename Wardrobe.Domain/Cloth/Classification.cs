@@ -1,4 +1,7 @@
-﻿namespace Wardrobe.Domain.Cloth;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Wardrobe.Domain.Cloth;
 
 public class Classification
 {
@@ -27,7 +30,9 @@ public class Classification
 
     public string Description { get; set; }
     public float Confidence { get; set; }
+    [BsonRepresentation(BsonType.String)]
     public AppropriateWeather AppropriateWeather { get; set; }
+    [BsonRepresentation(BsonType.String)]
     public BodyPart BodyPart { get; set; }
 }
 

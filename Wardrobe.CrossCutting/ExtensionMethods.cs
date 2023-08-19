@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 
@@ -37,5 +39,18 @@ public static class ExtensionMethods
         }
 
         return description;
+    }
+
+    public static string ConvertToMd5Hash(this string value)
+    {
+        var hashedBytes = MD5.HashData(Encoding.Default.GetBytes(value));
+        var sb = new StringBuilder();
+
+        foreach (var t in hashedBytes)
+        {
+            sb.Append(t.ToString("x2"));
+        }
+
+        return sb.ToString();
     }
 }

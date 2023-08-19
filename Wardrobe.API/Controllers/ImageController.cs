@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wardrobe.Application.Image.BackgroundRemoval;
 using Wardrobe.CrossCutting;
@@ -8,6 +9,7 @@ namespace Wardrobe.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class ImageController : ControllerBase
 {
     private readonly IBackgroundRemovalQueueService _backgroundRemovalQueueService;
@@ -31,6 +33,7 @@ public class ImageController : ControllerBase
         {
             var model = await this._clothesRepository.Save(new Cloth
             {
+                Owner = User.Identity.Name,
                 Name = file.FileName,
                 MimeType = file.GetMimeType(),
                 Image = file.ConvertToBase64()

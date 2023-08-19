@@ -8,6 +8,7 @@ public class Cloth : EntityBase
     public string? MimeType { get; set; }
     public string? Image { get; set; }
     public Classification? Classification { get; set; }
+    public string? Owner { get; set; }
 
     public void SetClassification(string description, float confidence)
     {

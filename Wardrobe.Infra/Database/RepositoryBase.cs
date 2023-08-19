@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Wardrobe.Domain.Repository;
 using Wardrobe.Domain.SeedWork;
+using Wardrobe.Domain.SeedWork.Repository;
 
 namespace Wardrobe.Infra.Database;
 
@@ -27,6 +27,12 @@ public abstract class RepositoryBase<TCollection> : IRepositoryBase<TCollection>
     {
         var filter = Builders<TCollection>.Filter.Eq("_id", id);
         return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<TCollection>> Get(FilterDefinition<TCollection> filter)
+    {
+        var result =  await _collection.FindAsync(filter);
+        return await result.ToListAsync();
     }
     
     public async Task Upsert(string id, TCollection model)
