@@ -7,14 +7,31 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+      <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+      <PackageReference Include="System.Net.Http" Version="4.3.4" />
     </ItemGroup>
 
     <ItemGroup>
       <Reference Include="Microsoft.AspNetCore.StaticFiles">
         <HintPath>..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\7.0.9\Microsoft.AspNetCore.StaticFiles.dll</HintPath>
       </Reference>
+      <Reference Include="Microsoft.Extensions.Azure">
+        <HintPath>..\..\..\.nuget\packages\microsoft.extensions.azure\1.7.0\lib\netstandard2.0\Microsoft.Extensions.Azure.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+        <HintPath>..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\7.0.9\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wardrobe.Infra\Wardrobe.Infra.csproj" />
+    </ItemGroup>
 
 </Project>

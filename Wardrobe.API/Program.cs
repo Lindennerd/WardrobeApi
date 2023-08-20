@@ -1,26 +1,18 @@
 using System.Text;
-using Azure.Identity;
-using Azure.Storage.Blobs;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Azure;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog.Extensions.Logging;
 using Wardrobe.Application.Cloth;
-using Wardrobe.Application.Geolocation;
 using Wardrobe.Application.Image.BackgroundRemoval;
 using Wardrobe.Application.Image.Upload;
 using Wardrobe.Application.Security;
 using Wardrobe.Application.User;
-using Wardrobe.Application.Weather;
+using Wardrobe.CrossCutting.Registrations;
 using Wardrobe.Infra.Database;
 using Wardrobe.Infra.Database.Cloth;
-
-
-// TODO Organizar collection com a imagem (usar GridFs ou S3)
-// TODO Considerar serviço de upload da imagem
-// TODO Melhorar gerenciamento de API Key nas HttpClients
+using Wardrobe.Infra.HttpClients;
 
 var builder = WebApplication
     .CreateBuilder(args);
@@ -58,13 +50,7 @@ builder.Services.AddSwaggerGen(option =>
 builder.Services.Configure<MongoConnectionSettings>(
     builder.Configuration.GetSection("MongoDB")
 );
-var azureConfig = builder.Configuration.GetSection("AzureStorage");
-builder.Services.AddSingleton(provider => new BlobServiceClient(azureConfig["ConnectionString"]));
-
-builder.Services.AddAzureClients(azBuilder =>
-{
-    azBuilder.AddBlobServiceClient(azureConfig["ConnectionString"]);
-});
+builder.Services.UseAzure(builder.Configuration);
 
 builder.Services.AddScoped<IClothesRepository, ClothesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -73,6 +59,10 @@ builder.Services.AddScoped<IBackgroundRemovalQueueService, BackgroundRemovalQueu
 builder.Services.AddScoped<ISecurityService, SecurityService>();
 builder.Services.AddScoped<IClothService, ClothService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUploadImageService, UploadImageService>();
+
+builder.Services.UseGeolocationHttpClient(builder.Configuration);
+builder.Services.UseWeatherHttpClient(builder.Configuration);
 
 var tokenConfig = builder.Configuration.GetSection("TokenConfiguration");
 builder.Services.AddScoped<ITokenService, TokenService>(opt => new TokenService(new TokenConfiguration
@@ -80,9 +70,6 @@ builder.Services.AddScoped<ITokenService, TokenService>(opt => new TokenService(
     Secret = tokenConfig["Secret"],
     ExpirationHours = int.Parse(tokenConfig["Expiration"])
 }));
-
-
-builder.Services.AddScoped<IUploadImageService, UploadImageService>();
 
 builder.Services.AddAuthentication(x =>
 {
@@ -110,16 +97,6 @@ builder.Services.AddMassTransit(x =>
         cfg.Host(rabbitMqConfiguration["Host"]);
         cfg.ConfigureEndpoints(context);
     });
-});
-
-builder.Services.AddHttpClient<IGeolocationHttpClient, GeolocationHttpClient>(client =>
-{
-    client.BaseAddress = new Uri("https://maps.googleapis.com/");
-});
-
-builder.Services.AddHttpClient<IWeatherApiClient, WeatherApiClient>(client =>
-{
-    client.BaseAddress = new Uri("https://api.weatherapi.com/v1/");
 });
 
 builder.Services.AddCors( options =>

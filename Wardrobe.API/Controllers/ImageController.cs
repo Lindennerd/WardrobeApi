@@ -46,9 +46,12 @@ public class ImageController : ControllerBase
                 Image = imageUrl
             });
 
-            this._backgroundRemovalQueueService.SendImageToBackgroundRemovalQueue(model.Id, file.ConvertToBase64(),
+            this._backgroundRemovalQueueService.SendImageToBackgroundRemovalQueue(
+                model.Id,
+                file.ConvertToBase64(),
                 file.FileName,
                 file.GetMimeType());
+            
             return Ok(new { imageUrl });
         }
         catch (Exception e)

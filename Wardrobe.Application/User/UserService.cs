@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
-using Wardrobe.Application.Geolocation;
-using Wardrobe.Application.Weather;
 using Wardrobe.Infra.Database;
+using Wardrobe.Infra.HttpClients;
 
 namespace Wardrobe.Application.User;
 
