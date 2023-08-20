@@ -7,7 +7,8 @@ namespace Wardrobe.Infra.Database;
 
 public class IdentityRepository : RepositoryBase<Identity>, IIdentityRepository
 {
-    public IdentityRepository(IOptions<MongoConnectionSettings> mongoConnectionSettings) : base(mongoConnectionSettings)
+    public IdentityRepository(IOptions<MongoConnectionSettings> mongoConnectionSettings) 
+        : base(mongoConnectionSettings, "identity")
     {
     }
 

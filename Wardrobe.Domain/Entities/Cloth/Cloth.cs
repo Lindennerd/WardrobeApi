@@ -1,6 +1,6 @@
 using Wardrobe.Domain.SeedWork;
 
-namespace Wardrobe.Domain.Cloth;
+namespace Wardrobe.Domain.Entities.Cloth;
 
 public class Cloth : EntityBase
 {

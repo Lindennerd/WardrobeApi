@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Wardrobe.Domain.User;
+using Wardrobe.Application.User;
 
 namespace Wardrobe.API.Controllers;
 
@@ -9,15 +9,19 @@ namespace Wardrobe.API.Controllers;
 [Route("api/[controller]/[action]")]
 public class UserController : ControllerBase
 {
-    public UserController()
+    public record SetAddressRequest(string Address);
+    
+    private readonly IUserService _userService;
+
+    public UserController(IUserService userService)
     {
-        
+        _userService = userService;
     }
 
     [HttpPost]
-    public async Task EditUser([FromBody] User user)
+    public async Task SetAddress([FromBody] SetAddressRequest addressRequest)
     {
-        return;
+        await this._userService.EditAddress(addressRequest.Address, User.Identity.Name);
     }
     
 }

@@ -14,6 +14,18 @@ public static class ExtensionMethods
         file.CopyTo(memoryStream);
         return Convert.ToBase64String(memoryStream.ToArray());
     }
+    
+    public static byte[] GetBytes(this IFormFile file)
+    {
+        using var memoryStream = new MemoryStream();
+        file.CopyTo(memoryStream);
+        return memoryStream.ToArray();
+    }
+
+    public static Stream GetStream(this IFormFile file)
+    {
+        return file.OpenReadStream();
+    }
 
     public static string GetMimeType(this IFormFile file)
     {

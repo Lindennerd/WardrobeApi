@@ -10,11 +10,11 @@ public abstract class RepositoryBase<TCollection> : IRepositoryBase<TCollection>
 {
     private readonly IMongoCollection<TCollection> _collection;
 
-    protected RepositoryBase(IOptions<MongoConnectionSettings> mongoConnectionSettings)
+    protected RepositoryBase(IOptions<MongoConnectionSettings> mongoConnectionSettings, string collectionName)
     {
         var mongoClient = new MongoClient(mongoConnectionSettings.Value.ConnectionString);
         var database = mongoClient.GetDatabase(mongoConnectionSettings.Value.DatabaseName);
-        _collection = database.GetCollection<TCollection>(mongoConnectionSettings.Value.CollectionName);
+        _collection = database.GetCollection<TCollection>(collectionName);
     }
 
     public async Task<TCollection> Save(TCollection model)

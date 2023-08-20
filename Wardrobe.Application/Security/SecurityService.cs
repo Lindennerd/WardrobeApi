@@ -1,11 +1,8 @@
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using Wardrobe.CrossCutting;
 using Wardrobe.CrossCutting.Exceptions;
 using Wardrobe.Domain.Identity;
-using Wardrobe.Domain.User;
 using Wardrobe.Infra.Database;
 
 namespace Wardrobe.Application.Security;
@@ -32,12 +29,12 @@ public class SecurityService : ISecurityService
     public async Task Register(string email, string password)
     {
         var existingUser = (await _userRepository
-            .Get(Builders<User>.Filter.Eq(u => u.Email, email)))
+            .Get(Builders<Domain.Entities.User.User>.Filter.Eq(u => u.Email, email)))
             .FirstOrDefault();
 
         if (existingUser != null) throw new UserAlreadyExistsException(email);
         
-        var user = await _userRepository.Save(new User
+        var user = await _userRepository.Save(new Domain.Entities.User.User
         {
             Email = email
         });
@@ -49,7 +46,7 @@ public class SecurityService : ISecurityService
         });
     }
 
-    public async Task<(string Token, User user)> Login(string email, string password)
+    public async Task<(string Token, Domain.Entities.User.User user)> Login(string email, string password)
     {
         var user = await _userRepository.GetByEmail(email);
         if (user == null) throw new UnauthorizedUser(email);
@@ -69,5 +66,5 @@ public class SecurityService : ISecurityService
 public interface ISecurityService
 {
     Task Register(string email, string password);
-    Task<(string Token, User user)> Login(string email, string password);
+    Task<(string Token, Domain.Entities.User.User user)> Login(string email, string password);
 }

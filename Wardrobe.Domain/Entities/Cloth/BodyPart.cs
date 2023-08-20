@@ -1,4 +1,4 @@
-namespace Wardrobe.Domain.Cloth;
+namespace Wardrobe.Domain.Entities.Cloth;
 
 public enum BodyPart
 {

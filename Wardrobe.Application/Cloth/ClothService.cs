@@ -11,7 +11,7 @@ public class ClothService : IClothService
         _clothesRepository = clothesRepository;
     }
 
-    public async Task<IEnumerable<Domain.Cloth.Cloth>> GetClothesForUser(string user)
+    public async Task<IEnumerable<Domain.Entities.Cloth.Cloth>> GetClothesForUser(string user)
     {
         return await _clothesRepository.GetByUser(user);
     }
@@ -19,5 +19,5 @@ public class ClothService : IClothService
 
 public interface IClothService
 {
-    Task<IEnumerable<Domain.Cloth.Cloth>> GetClothesForUser(string user);
+    Task<IEnumerable<Domain.Entities.Cloth.Cloth>> GetClothesForUser(string user);
 }

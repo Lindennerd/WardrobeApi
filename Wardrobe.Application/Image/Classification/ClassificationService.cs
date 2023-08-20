@@ -17,7 +17,7 @@ public class ClassificationService
         _logger = logger;
     }
 
-    public async Task<(string id, Domain.Cloth.Classification classification)> ClassifyImage(string id, string imageBase64, string fileName)
+    public async Task<(string id, Domain.Entities.Cloth.Classification classification)> ClassifyImage(string id, string imageBase64, string fileName)
     {
         var tempPath = await SaveBase64Image(imageBase64, fileName);
         var prediction = _classificationPredictionService.Predict(new ImageData { ImagePath = tempPath });
@@ -27,7 +27,7 @@ public class ClassificationService
 
         return (
             id,
-            new Domain.Cloth.Classification(
+            new Domain.Entities.Cloth.Classification(
                 prediction.PredictedLabelValue,
                 prediction.Score.Average())
         );

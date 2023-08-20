@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wardrobe.Application.Cloth;
-using Wardrobe.Domain.Cloth;
+using Wardrobe.Domain.Entities.Cloth;
 
 namespace Wardrobe.API.Controllers;
 

@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wardrobe.Application.Image.BackgroundRemoval;
+using Wardrobe.Application.Image.Upload;
 using Wardrobe.CrossCutting;
-using Wardrobe.Domain.Cloth;
+using Wardrobe.Domain.Entities.Cloth;
 using Wardrobe.Infra.Database.Cloth;
 
 namespace Wardrobe.API.Controllers;
@@ -13,35 +14,42 @@ namespace Wardrobe.API.Controllers;
 public class ImageController : ControllerBase
 {
     private readonly IBackgroundRemovalQueueService _backgroundRemovalQueueService;
+    private readonly IUploadImageService _uploadImageService;
     private readonly IClothesRepository _clothesRepository;
     private readonly ILogger<ImageController> _logger;
 
     public ImageController(
-        IBackgroundRemovalQueueService  backgroundRemovalQueueService,
+        IBackgroundRemovalQueueService backgroundRemovalQueueService,
+        IUploadImageService uploadImageService,
         IClothesRepository clothesRepository,
         ILogger<ImageController> logger)
     {
         _backgroundRemovalQueueService = backgroundRemovalQueueService;
+        _uploadImageService = uploadImageService;
         _clothesRepository = clothesRepository;
         _logger = logger;
     }
-    
+
     [HttpPost]
     public async Task<ActionResult> SendImageToBackgroundRemovalQueue(IFormFile file)
     {
         try
         {
+            var imageUrl = await _uploadImageService.Upload(
+                file.GetStream(), file.FileName, User.Identity.Name);
+
             var model = await this._clothesRepository.Save(new Cloth
             {
                 Owner = User.Identity.Name,
                 Name = file.FileName,
                 MimeType = file.GetMimeType(),
-                Image = file.ConvertToBase64()
+                Image = imageUrl
             });
-        
-            this._backgroundRemovalQueueService.SendImageToBackgroundRemovalQueue(model.Id, file.ConvertToBase64(), file.FileName,
+
+            this._backgroundRemovalQueueService.SendImageToBackgroundRemovalQueue(model.Id, file.ConvertToBase64(),
+                file.FileName,
                 file.GetMimeType());
-            return Ok();
+            return Ok(new { imageUrl });
         }
         catch (Exception e)
         {
