@@ -21,7 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Wardrobe API", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = $"Wardrobe API - {builder.Environment.EnvironmentName}", Version = "v1" });
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -60,6 +60,8 @@ builder.Services.AddScoped<ISecurityService, SecurityService>();
 builder.Services.AddScoped<IClothService, ClothService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUploadImageService, UploadImageService>();
+
+builder.Services.AddMemoryCache();
 
 builder.Services.UseGeolocationHttpClient(builder.Configuration);
 builder.Services.UseWeatherHttpClient(builder.Configuration);
@@ -119,11 +121,8 @@ builder.Services.AddLogging(logging =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 app.UseCors();
 

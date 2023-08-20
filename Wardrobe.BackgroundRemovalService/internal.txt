@@ -14,3 +14,19 @@ File name: 'Logtail, Culture=neutral, PublicKeyToken=null'
    at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
    --- End of inner exception stack trace ---
 2023-08-19 17:24:22.1886 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'logtail' not found for logging rule: *.
+2023-08-20 17:56:10.4041 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: Logtail
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'Logtail, Culture=neutral, PublicKeyToken=null'. The system cannot find the file specified.
+
+File name: 'Logtail, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-20 17:56:10.5697 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target of type: Logtail
+ ---> System.ArgumentException: Target type-alias is unknown: 'Logtail'
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+   --- End of inner exception stack trace ---
+2023-08-20 17:56:10.5855 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'logtail' not found for logging rule: *.

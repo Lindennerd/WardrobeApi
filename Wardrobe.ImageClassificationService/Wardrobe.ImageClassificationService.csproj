@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Logtail" Version="0.2.6" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.0-develop.1447" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
         <PackageReference Include="Microsoft.Extensions.ML" Version="3.0.0-preview.23266.6" />
