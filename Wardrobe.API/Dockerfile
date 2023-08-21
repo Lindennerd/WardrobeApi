@@ -5,7 +5,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["./Wardrobe.API.csproj", "Wardrobe.API/"]
+COPY "WardrobeApp.sln" "./"
+COPY "./Wardrobe.API.csproj" "Wardrobe.API/"
+COPY "./Wardrobe.Application.csproj" "Wardrobe.Application/"
+COPY "./Wardrobe.CrossCutting.csproj" "Wardrobe.CrossCutting/"
+COPY "./Wardrobe.Domain.csproj" "Wardrobe.Domain/"
+COPY "./Wardrobe.Infra.csproj" "Wardrobe.Infra/"
+
 RUN dotnet restore "Wardrobe.API/Wardrobe.API.csproj"
 COPY . .
 WORKDIR "/src/Wardrobe.API"
@@ -13,6 +19,7 @@ RUN dotnet build "Wardrobe.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "Wardrobe.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+EXPOSE 80
 
 FROM base AS final
 WORKDIR /app
