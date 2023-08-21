@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Wardrobe.API.csproj", "Wardrobe.API/"]
+COPY ["WardrobeApp/Wardrobe.API/Wardrobe.API.csproj", "Wardrobe.API/"]
 RUN dotnet restore "Wardrobe.API/Wardrobe.API.csproj"
 COPY . .
 WORKDIR "/src/Wardrobe.API"
