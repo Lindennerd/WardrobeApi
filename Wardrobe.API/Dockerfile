@@ -6,15 +6,15 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-COPY "../WardrobeApp.sln" "./WardrobeApp.sln"
-COPY "./Wardrobe.API/Wardrobe.API.csproj" "./Wardrobe.API/Wardrobe.API.csproj"
-COPY "./Wardrobe.Application/Wardrobe.Application.csproj" "./Wardrobe.Application/Wardrobe.Application.csproj"
-COPY "./Wardrobe.CrossCutting/Wardrobe.CrossCutting.csproj" "./Wardrobe.CrossCutting/Wardrobe.CrossCutting.csproj"
-COPY "./Wardrobe.Domain/Wardrobe.Domain.csproj" "./Wardrobe.Domain/Wardrobe.Domain.csproj"
-COPY "./Wardrobe.Infra/Wardrobe.Infra.csproj" "./Wardrobe.Infra/Wardrobe.Infra.csproj"
-COPY "./Wardrobe.BackgroundRemovalService/Wardrobe.BackgroundRemovalService.csproj" "./Wardrobe.BackgroundRemovalService/Wardrobe.BackgroundRemovalService.csproj"
-COPY "./Wardrobe.ImageClassificationService/Wardrobe.ImageClassificationService.csproj" "./Wardrobe.ImageClassificationService/Wardrobe.ImageClassificationService.csproj"
-COPY "./Wardrobe.Tests/Wardrobe.Tests.csproj" "./Wardrobe.Tests/Wardrobe.Tests.csproj"
+COPY *.sln .
+COPY Wardrobe.API/*.csproj Wardrobe.API/
+COPY Wardrobe.Application/*.csproj Wardrobe.Application/
+COPY Wardrobe.CrossCutting/*.csproj Wardrobe.CrossCutting/
+COPY Wardrobe.Domain/*.csproj Wardrobe.Domain/
+COPY Wardrobe.Infra/*.csproj Wardrobe.Infra/
+COPY Wardrobe.Tests/*.csproj Wardrobe.Tests/
+COPY Wardrobe.BackgroundRemovalService/*.csproj Wardrobe.BackgroundRemovalService/
+COPY Wardrobe.ImageClassificationService/*.csproj Wardrobe.ImageClassificationService/
 
 RUN dotnet restore 
 
