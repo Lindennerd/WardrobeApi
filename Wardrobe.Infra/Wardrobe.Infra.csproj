@@ -7,15 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="Microsoft.Extensions.Options">
-        <HintPath>..\..\..\.nuget\packages\microsoft.extensions.options\7.0.1\lib\net7.0\Microsoft.Extensions.Options.dll</HintPath>
-      </Reference>
-      <Reference Include="MongoDB.Bson">
-        <HintPath>..\..\..\.nuget\packages\mongodb.bson\2.20.0\lib\netstandard2.1\MongoDB.Bson.dll</HintPath>
-      </Reference>
-      <Reference Include="MongoDB.Driver">
-        <HintPath>..\..\..\.nuget\packages\mongodb.driver\2.20.0\lib\netstandard2.1\MongoDB.Driver.dll</HintPath>
-      </Reference>
+      <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+      <PackageReference Include="MongoDB.Bson" Version="2.20.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
     </ItemGroup>
 
     <ItemGroup>

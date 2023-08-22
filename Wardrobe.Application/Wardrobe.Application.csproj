@@ -13,42 +13,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Azure.Storage.Blobs">
-        <HintPath>..\..\..\.nuget\packages\azure.storage.blobs\12.17.0\lib\net6.0\Azure.Storage.Blobs.dll</HintPath>
-      </Reference>
-      <Reference Include="MassTransit.Abstractions">
-        <HintPath>..\..\..\.nuget\packages\masstransit.abstractions\8.1.0-develop.1444\lib\net7.0\MassTransit.Abstractions.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-        <HintPath>..\..\..\.nuget\packages\microsoft.extensions.logging.abstractions\7.0.1\lib\net7.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.Extensions.ML">
-        <HintPath>..\..\..\.nuget\packages\microsoft.extensions.ml\3.0.0-preview.23266.6\lib\netstandard2.0\Microsoft.Extensions.ML.dll</HintPath>
-      </Reference>
-      <Reference Include="MongoDB.Driver">
-        <HintPath>..\..\..\.nuget\packages\mongodb.driver\2.20.0\lib\netstandard2.1\MongoDB.Driver.dll</HintPath>
-      </Reference>
+      <PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
+      <PackageReference Include="MassTransit.Abstractions" Version="8.1.0-develop.1444" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+      <PackageReference Include="Microsoft.Extensions.ML" Version="3.0.0-preview.23266.6" />
+      <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
+      <PackageReference Include="Azure.Core" Version="1.34.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
     </ItemGroup>
 
     <ItemGroup>
       <Compile Remove="Image\BackgroundRemoval\BackgroundRemovalContext.cs" />
     </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Azure.Core" Version="1.34.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
-      <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-      <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
-      <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
-
-
-
-
-
-
-    </ItemGroup>
-
-
-
-
 </Project>
