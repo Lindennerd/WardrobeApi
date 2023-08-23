@@ -34,5 +34,5 @@ stages:
         containerRegistry: 'wardrobe'
         repository: '$(imageRepository)'
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: '$(dockerfilePath)'
         tags: '$(tag)'
