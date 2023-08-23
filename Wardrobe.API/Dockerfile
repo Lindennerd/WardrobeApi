@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
 COPY *.sln .
-COPY Wardrobe.API/*.csproj Wardrobe.API/
+COPY ../Wardrobe.API/*.csproj Wardrobe.API/
 COPY Wardrobe.Application/*.csproj Wardrobe.Application/
 COPY Wardrobe.CrossCutting/*.csproj Wardrobe.CrossCutting/
 COPY Wardrobe.Domain/*.csproj Wardrobe.Domain/

@@ -1,0 +1,23 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  wardrobe.api:
+    build:
+      context: "/home/luiz/source/WardrobeApp"
+      dockerfile: "Wardrobe.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/Wardrobe.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "/home/luiz/.nuget/packages"
+      NUGET_FALLBACK_PACKAGES: "/home/luiz/.nuget/packages"
+    image: "wardrobe.api:dev"
+    ports: []
+    volumes:
+    - "/home/luiz/.microsoft/usersecrets:/root/.microsoft/usersecrets"
+    - "/home/luiz/.nuget/packages:/root/.nuget/fallbackpackages"
+    - "/home/luiz/source/WardrobeApp/Wardrobe.API:/app:rw"
+    - "/home/luiz/source/WardrobeApp:/src:rw"
+    working_dir: "/app"

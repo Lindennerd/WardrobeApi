@@ -32,5 +32,11 @@ public class ClothController : ControllerBase
             throw;
         }
     }
+
+    [HttpGet]
+    public async Task<IEnumerable<Cloth>> GetAppropriateCloths()
+    {
+        return await this._clothService.GetClothesForToday(User.Identity.Name);
+    }
     
 }

@@ -27,10 +27,10 @@ public class WeatherApiClient : IWeatherApiClient
         _httpClient.BaseAddress = new Uri(options.BaseUrl);
     }
 
-    public async Task<ForecastResult?> GetForecast(double latitude, double longitude, int days)
+    public async Task<ForecastResult?> GetForecast(string latitude, string longitude, int days)
     {
         var cacheKey = $"{latitude},{longitude}-{days}";
-        if (_cache.TryGetValue<ForecastResult>(cacheKey, out ForecastResult forecast)) return forecast;
+        if (_cache.TryGetValue(cacheKey, out ForecastResult forecast)) return forecast;
         
         var response =
             await this._httpClient.GetAsync(
@@ -47,5 +47,5 @@ public class WeatherApiClient : IWeatherApiClient
 
 public interface IWeatherApiClient
 {
-    Task<ForecastResult?> GetForecast(double latitude, double longitude, int days);
+    Task<ForecastResult?> GetForecast(string latitude, string longitude, int days);
 }

@@ -26,4 +26,18 @@ public class ClothesRepository : RepositoryBase<Domain.Entities.Cloth.Cloth>, IC
         var userFilter = Builders<Domain.Entities.Cloth.Cloth>.Filter.Eq(c => c.Owner, user);
         return await Get(userFilter);
     }
+
+    public async Task<IEnumerable<Domain.Entities.Cloth.Cloth>> GetByTemperature(string user, AppropriateWeather weather)
+    {
+        var weatherFilter =
+            Builders<Domain.Entities.Cloth.Cloth>.Filter.And(
+                Builders<Domain.Entities.Cloth.Cloth>.Filter.Eq(c => c.Owner, user),
+                Builders<Domain.Entities.Cloth.Cloth>.Filter.Or(
+                    Builders<Domain.Entities.Cloth.Cloth>.Filter.Eq(c => c.Classification, null),
+                    Builders<Domain.Entities.Cloth.Cloth>.Filter.Eq(c => c.Classification.AppropriateWeather, weather),
+                    Builders<Domain.Entities.Cloth.Cloth>.Filter.Eq(c => c.Classification.AppropriateWeather, AppropriateWeather.Both)
+                ));
+
+        return await Get(weatherFilter);
+    }
 }
